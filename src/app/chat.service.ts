@@ -1,26 +1,34 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import io from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  constructor() { }
-  private socket = io('http://localhost:3000');
+  private apiUrl = 'http://localhost:8000/api/chats';
 
-  sendMessage(message: string){
-    this.socket.emit('new-message', message);
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  getChats(): Observable<any[]> {
+    const token = this.authService.getToken(); // Retrieve the stored token
+    const headers = { 'Authorization': `Bearer ${token}` };
+    return this.http.get<any[]>('http://localhost:8000/api/chats', { headers });
   }
 
-  getMessages() {
-    let observable = new Observable<{ user: String, message: String }>(observer => {
-      this.socket.on('new-message', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect(); };
-    });
-    return observable;
+  getMessagesForChat(chatId: string): Observable<any> {
+    const token = this.authService.getToken(); // Retrieve the stored token
+    const headers = { 'Authorization': `Bearer ${token}` };
+    return this.http.get<any[]>(`${this.apiUrl}/${chatId}/messages`,{ headers });
+  }
+
+  sendMessage(chatId: string, content: string, receiverId: number): Observable<any> {
+    const token = this.authService.getToken(); // Retrieve the stored token
+    const headers = { 'Authorization': `Bearer ${token}` };
+    const url = `${this.apiUrl}/${chatId}/messages`; // Construct the URL
+    const body = { content, receiver_id: receiverId }; // Construct the body
+    return this.http.post<any>(url, body, { headers });
   }
 }

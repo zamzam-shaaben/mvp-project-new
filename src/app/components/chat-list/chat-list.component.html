@@ -1,0 +1,62 @@
+<!-- <div *ngFor="let chat of chats">
+  <p>Last message: {{ chat.messages[0]?.content }}</p>
+  <p>With user: {{ chat.users[0]?.name }}</p>
+  <p>At: {{ chat.messages[0]?.created_at }}</p>
+</div> -->
+
+
+<br/>
+
+<div class="container">
+  <div class="row">
+  <div class="col-md-12">
+    <div class="chat_container">
+      <div class="job-box">
+        <div class="job-box-filter">
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+            <label>Show
+            <select name="datatable_length" class="form-control input-sm">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            </select>
+            entries</label>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <div class="filter-search-box text-right">
+                <label>Search:<input type="search" class="form-control input-sm" placeholder=""></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="inbox-message">
+          <ul>
+            <li *ngFor="let chat of chats">
+              <a [routerLink]="['/chats', chat.chat_id, 'messages']">
+                <div class="message-avatar">
+                  <!-- <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""> -->
+                  <img src="/assets/images/profile-icon.png" alt="Profile Avatar" class="circle-avatar">
+                </div>
+                <div class="message-body">
+                  <div class="message-body-heading">
+                    <h5>{{ chat.other_user_name }} <span class="unread">Unread</span></h5>
+                    <span>{{ chat.messages[0]?.createdAt | date:'medium' }}</span>
+                  </div>
+                  <p>{{ chat.messages[0]?.content }}</p>
+                </div>
+              </a>
+            </li>
+
+
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>

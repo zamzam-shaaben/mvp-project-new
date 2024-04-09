@@ -1,0 +1,30 @@
+<!-- Chat Messages Display -->
+<!-- <div class="messages">
+  <div *ngFor="let message of messages" class="message" [ngClass]="{'sender': message.isSender, 'receiver': !message.isSender}">
+
+    <div class="sender-name">{{ message.senderName }}</div>
+    <div class="message-content">
+      <img *ngIf="message.isSender" src="/assets/avatar-icon.png" alt="Avatar" class="avatar">
+      <span class="content">{{ message.content }}</span>
+      <span class="time">{{ message.created_at | date:'shortTime' }}</span>
+    </div>
+  </div>
+</div> -->
+
+<div class="messages">
+  <div *ngFor="let message of messages" class="message" [ngClass]="{'sender': message.isSender, 'receiver': !message.isSender}">
+    <div class="message-content">
+      <span class="content">{{ message.content }}</span>
+      <span class="time">{{ message.created_at | date:'shortTime' }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Message Input Area -->
+<div class="message-input">
+  <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." class="input-field">
+  <button (click)="sendMessage()">Send</button>
+</div>
+
+
+
